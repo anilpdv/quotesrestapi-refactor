@@ -9,17 +9,22 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func getPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "4747"
+		log.Println("[-] No PORT environment variable detected. Setting to ", port)
+	}
+	return ":" + port
+}
+
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", routes.SearchQuotes)
 	r.HandleFunc("/popular", routes.PopularQuotes)
 	r.HandleFunc("/tag/{category}", routes.QuotesWithTag)
-	//Port
-	getport := os.Getenv("PORT")
 
-	if getport == "" {
-		log.Fatal("$PORT must be set")
-	}
-
-	http.ListenAndServe(getport, r)
+	port := getPort()
+	log.Println("[-] Listening on...", port)
+	http.ListenAndServe(":"+os.Getenv("PORT"), r)
 }
