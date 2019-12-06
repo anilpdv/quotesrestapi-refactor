@@ -20,10 +20,11 @@ func getPort() string {
 
 func main() {
 	r := mux.NewRouter()
+	r.HandleFunc("/", routes.HomeRoute)
 	r.HandleFunc("/search", routes.SearchQuotes)
 	r.HandleFunc("/popular", routes.PopularQuotes)
 	r.HandleFunc("/tag/{category}", routes.QuotesWithTag)
 	port := getPort()
 	log.Println("[-] Listening on...", port)
-	http.ListenAndServe(":"+os.Getenv("PORT"), r)
+	http.ListenAndServe(port, r)
 }
