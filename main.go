@@ -24,6 +24,8 @@ func main() {
 	r.HandleFunc("/search", routes.SearchQuotes)
 	r.HandleFunc("/popular", routes.PopularQuotes)
 	r.HandleFunc("/tag/{category}", routes.QuotesWithTag)
+	r.HandleFunc("/random", routes.RandomQuotes)
+
 	port := getPort()
 	log.Println("[-] Listening on...", port)
 	http.ListenAndServe(port, r)
